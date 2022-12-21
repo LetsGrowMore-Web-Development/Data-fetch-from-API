@@ -67,3 +67,12 @@
     transition: all .3s ease;
     color: var(--boxcolor);
 }
+.btn{
+    display: inline;
+    background-color: var(--orange);
+    border: none;
+    color: var(--fontcolor);
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+}

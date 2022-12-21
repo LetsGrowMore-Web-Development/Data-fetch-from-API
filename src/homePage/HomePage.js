@@ -1,61 +1,41 @@
 import { Row, Col, Card, Button } from "antd";
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { useEffect, useState } from "react";
 import "./homepage.css"
 const { Meta } = Card;
 function HomePage() {
-    const [users, setUsers] = useState([{
-        "id": 1,
-        "email": "george.bluth@reqres.in",
-        "first_name": "George",
-        "last_name": "Bluth",
-        "avatar": "https://reqres.in/img/faces/1-image.jpg"
-    },
-    {
-        "id": 2,
-        "email": "janet.weaver@reqres.in",
-        "first_name": "Janet",
-        "last_name": "Weaver",
-        "avatar": "https://reqres.in/img/faces/2-image.jpg"
-    },
-    {
-        "id": 3,
-        "email": "emma.wong@reqres.in",
-        "first_name": "Emma",
-        "last_name": "Wong",
-        "avatar": "https://reqres.in/img/faces/3-image.jpg"
-    },
-    {
-        "id": 4,
-        "email": "eve.holt@reqres.in",
-        "first_name": "Eve",
-        "last_name": "Holt",
-        "avatar": "https://reqres.in/img/faces/4-image.jpg"
-    },
-    {
-        "id": 5,
-        "email": "charles.morris@reqres.in",
-        "first_name": "Charles",
-        "last_name": "Morris",
-        "avatar": "https://reqres.in/img/faces/5-image.jpg"
-    },
-    {
-        "id": 6,
-        "email": "tracey.ramos@reqres.in",
-        "first_name": "Tracey",
-        "last_name": "Ramos",
-        "avatar": "https://reqres.in/img/faces/6-image.jpg"
-    }]);
+    const [users, setUsers] = useState([]);
+    const [pageNumber, setPagenumber] = useState(1);
+    const [isLoding, setLoading] = useState(false);
+    const [isInitialload, setInitialLoad] = useState(true);
+    const [isMore, setMore] = useState(true);
 
-
-    // const getUsers = async () => {
-    //     const response = await fetch("https://reqres.in/api/users");
-    //     setUsers(await response.json());
-    //     console.log(users);
-    // }
+    const getUsers = async () => {
+        setLoading(true);
+        const response = await fetch(`https://reqres.in/api/users?page=${pageNumber}`);
+        var result = (await response.json());
+        setTimeout(() => {
+            if (result && result.data && Array.isArray(result.data) && result.data.length > 0) {
+                var usr = users;
+                if (pageNumber == 1) {
+                    usr = result.data;
+                } else
+                    usr = [...usr, ...result.data];
+                setPagenumber(pageNumber + 1);
+                setUsers([...usr]);
+            } else
+                setMore(false);
+            console.log(users);
+            setLoading(false);
+        }, 2000);
+    }
 
     // useEffect(()=>{
-    //     getUsers();
     // },[])
+    if (isInitialload) {
+        getUsers();
+        setInitialLoad(false);
+    }
     return (
         <>
 
@@ -64,8 +44,7 @@ function HomePage() {
             </Row>
             <Col className="main-box">
 
-                {users == "" ?
-                    <Button>Double click to load</Button> :
+                {users && Array.isArray(users) && users.length > 0 &&
                     users.map((e) => {
                         return (
                             <Row className="UserBox" justify={"center"} align={"middle"} gutter={20}>
@@ -85,6 +64,16 @@ function HomePage() {
                         )
                     })
                 }
+                {!isLoding && users && Array.isArray(users) && users.length == 0 && <p>No record found</p>}
+                {isLoding && <Player
+                    autoplay
+                    loop
+                    src="https://assets8.lottiefiles.com/packages/lf20_p8bfn5to.json"
+                    style={{ height: '300px', width: '300px' }}
+                >
+                  
+                </Player>}
+                {isMore && !isLoding && <Button className="btn" onClick={getUsers} >Load More</Button>}
 
 
                 {/* <Button onClick={getUsers} >Double click to load</Button> */}
