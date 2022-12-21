@@ -1,0 +1,69 @@
+.headinfo{
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    width: 100wh;
+    color: var(--orange);
+    padding: 20px;
+}
+.api{
+    color: var(--greencolor);
+}
+.main-box{
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+.userCard{
+    background-color: var(--boxcolor);
+    border: 3px solid var(--orange);
+    border-radius: 10px;
+   
+}
+.ant-card-meta-title{
+    color: white !important;
+}
+.ant-card-meta-description{
+    color: var(--lablecolor) !important;
+}
+
+.UserBox{
+    position: relative;
+    padding: 20px 30px;
+    border-radius: 30px;
+    background-color: var(--boxcolor);
+    margin: 20px;
+    transition: all .3s ease;
+}
+.UserBox:hover{
+    background-color: var(--lablecolor);
+   
+}
+.Avatarimg{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.userMeta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+.userId{
+    top: -10px;
+    right: -5px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--orange);
+    transition: all .3s ease;
+    color: var(--boxcolor);
+}
